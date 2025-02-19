@@ -136,3 +136,4 @@ export default function InvitePage() {
 }
 
 //npm i tailwind-merge
+//parei em 27:07 do segundo vídeo
