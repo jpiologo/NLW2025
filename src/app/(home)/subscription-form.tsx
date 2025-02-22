@@ -6,6 +6,8 @@ import { User, Mail, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
+import { postSubscriptions } from "@/http/api";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const subscriptionSchema = z.object({
 	name: z.string().min(2, 'Digite seu nome completo'),
@@ -15,6 +17,8 @@ const subscriptionSchema = z.object({
 type SubscriptionSchema = z.infer<typeof subscriptionSchema>
 
 export function SubscriptionForm() {
+	const router = useRouter()
+	const searchParams = useSearchParams()
 
 	const { 
 		register, 
@@ -24,8 +28,12 @@ export function SubscriptionForm() {
 		resolver: zodResolver(subscriptionSchema)
 	})
 
-	function onSubscribe(data: SubscriptionSchema) {
-		console.log(data)
+	async function onSubscribe({name, email}: SubscriptionSchema) {
+		const referrer = searchParams.get('referrer') ?? ""
+
+		const { subscriberId } = await postSubscriptions({ name, email, referrer })
+		
+		router.push(`/invite/${subscriberId}`)
 	}
 
 	return (
@@ -81,5 +89,9 @@ export function SubscriptionForm() {
 	)
 }
 
+
+function subscribeToEvent() {
+	throw new Error("Function not implemented.");
+}
 //npm i react-hook-form
 //npm i zod @hookform/resolvers -> validação de formulário

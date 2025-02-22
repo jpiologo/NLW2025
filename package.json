@@ -25,6 +25,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.20",
+    "orval": "^7.5.0",
     "postcss": "^8.5.2",
     "tailwindcss": "^4.0.7",
     "typescript": "^5"
